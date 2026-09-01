@@ -1476,8 +1476,7 @@ reportEmi <- function(gdx, output = NULL, regionSubsetList = NULL,
       out,
       setNames(out[, , "Emi|CO2|Land-Use Change|Negative|+|Intentional (Mt CO2/yr)"] +
         out[, , "Emi|CO2|Land-Use Change|Negative|+|Unintentional (Mt CO2/yr)"], "Emi|CO2|Land-Use Change|+|Negative (Mt CO2/yr)"),
-      setNames(out[, , "Emi|CO2|Land-Use Change|+|Positive (Mt CO2/yr)"] +
-        out[, , "Emi|CO2|Land-Use Change|Negative|+|Unintentional (Mt CO2/yr)"], "Emi|CO2|Gross|+|Land-Use Change (Mt CO2/yr)")
+      setNames(out[, , "Emi|CO2|Land-Use Change|+|Positive (Mt CO2/yr)"], "Emi|CO2|Gross|+|Land-Use Change (Mt CO2/yr)")
     )
   }
 
@@ -2382,7 +2381,8 @@ reportEmi <- function(gdx, output = NULL, regionSubsetList = NULL,
     out,
     # total negative land-use change emissions
     setNames(
-      out[, , "Emi|CO2|Land-Use Change|Negative|+|Intentional (Mt CO2/yr)"],
+      out[, , "Emi|CO2|Land-Use Change|Negative|+|Intentional (Mt CO2/yr)"]
+      + out[, , "Emi|CO2|Land-Use Change|Negative|+|Unintentional (Mt CO2/yr)"],
       "Emi|CO2|CDR|+|Land-Use Change (Mt CO2/yr)"
     ),
     # total BECCS (pe2se + bio FE w CCS in industry and CDR demand sector + waste incineration BECCS)
@@ -3781,7 +3781,8 @@ reportEmi <- function(gdx, output = NULL, regionSubsetList = NULL,
     vars %>%
       deletePlus() %>% # remove all + from extended variables: summation checks only make sense if all sub-variables are covered
       sub("^Emi\\|CO2", paste0("Emi|CO2|", addedString), .) %>%
-      sub("^Emi\\|GHG", paste0("Emi|GHG|", addedString), .)
+      sub("^Emi\\|GHG", paste0("Emi|GHG|", addedString), .) %>%
+      sub("^Carbon Management\\|Storage", paste0("Carbon Management|Storage|", addedString), .)
   }
 
   # emissions variables with bunkers. Insert 'w/ Bunkers' into variable name
@@ -3838,7 +3839,8 @@ reportEmi <- function(gdx, output = NULL, regionSubsetList = NULL,
     "Emi|CO2|CDR|+|EW (Mt CO2/yr)",
     "Emi|CO2|CDR|+|OAE (Mt CO2/yr)",
     "Emi|CO2|CDR|+|Land-Use Change (Mt CO2/yr)",
-    "Emi|CO2|CDR|+|Materials (Mt CO2/yr)"
+    "Emi|CO2|CDR|+|Materials (Mt CO2/yr)",
+    "Carbon Management|Storage (Mt CO2/yr)"
   ) %>%
     intersect(getNames(out)) # keep only variables that are in out
 
