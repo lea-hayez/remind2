@@ -1,7 +1,7 @@
 Type: Package
 Package: remind2
 Title: The REMIND R package (2nd generation)
-Version: 2.5.7
+Version: 2.6.0
 Date: 2026-09-01
 Authors@R: c(
     person("Renato", "Rodrigues", , "renato.rodrigues@pik-potsdam.de", role = c("aut", "cre")),
